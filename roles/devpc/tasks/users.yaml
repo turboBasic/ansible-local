@@ -14,27 +14,32 @@
     - { name: astaroth, groups: [sudo, adm], password: '$6$abrakadabra$ux.sOuxjqC3cNggugn8NaYbVqC2Xkqz0/E4E7/MYsr3CELfM0ErO5bYeD3gj3yB8S/axW6jYBBQe6i.y3Pcgv.' }
     - { name: mao, groups: [sudo, adm, ansible], password: '$6$abrakadabra$OXB4pmH2Rk.xW048zDADpCrG0ZkWHAAg6bPkCtQ/Owgm0wbMRwXDn3YWUV4BA3Nai8rizljhs2SaoOTr8sqVL/' }
 
-- name: Add public SSH keys
-  copy:
-    src: .ssh
-    dest: "/home/{{ item }}"
+
+- name: Create .ssh directories
+  file:
+    path: "/home/{{ item }}/.ssh"
     owner: "{{ item }}"
     group: "{{ item }}"
-    mode: u+rwx,g-rwx,o-rwx
+    mode: 0700
   with_items:
     - mao
     - ansible
-    - astaroth
+    - astaroth    
 
-- name: Ensure correct permissions for .ssh directory and files
-  file:
-    path: "{{ item.path }}"
-    owner: "{{ item.name }}"
-    group: "{{ item.name }}"
-    mode: "{{ item.mode }}"
+
+- name: Copy public keys
+  copy:
+    src: .ssh/authorized_keys
+    dest: "/home/{{ item }}/.ssh"
+    owner: "{{ item }}"
+    group: "{{ item }}"
+    mode: 0644
   with_items:
-    - { name: mao, path: /home/mao/.ssh, mode: '0700' }
-    - { name: mao, path: /home/mao/.ssh/authorized_keys, mode: '0644' }
+    - mao
+    - ansible
+    - astaroth      
+
+
     # - { name: mao, path: /home/mao/.ssh/bb88_ed25519, mode: '0600' }
     # - { name: mao, path: /home/mao/.ssh/bb88_ed25519.ppk, mode: '0600' }
     # - { name: mao, path: /home/mao/.ssh/bb88_ecdsa, mode: '0600' }
@@ -43,10 +48,6 @@
     # - { name: mao, path: /home/mao/.ssh/bb88_rsa_2048.ppk, mode: '0600' }
     # - { name: mao, path: /home/mao/.ssh/bb88_rsa_4096, mode: '0600' }
     # - { name: mao, path: /home/mao/.ssh/bb88_rsa_4096.ppk, mode: '0600' }
-    - { name: ansible, path: /home/ansible/.ssh, mode: '0700' }
-    - { name: ansible, path: /home/ansible/.ssh/authorized_keys, mode: '0644' }
-    - { name: astaroth, path: /home/astaroth/.ssh, mode: '0700' }
-    - { name: astaroth, path: /home/astaroth/.ssh/authorized_keys, mode: '0644' }
 
 
 - stat:
@@ -56,8 +57,8 @@
 - name: ssh config to access Github
   copy: 
     src: .ssh/config
-    dest: "/home/{{ me }}/.ssh/"
-  when: ssh_config.stat.path is not defined
+    dest: "/home/{{ me }}/.ssh/config"
+  when: not ssh_config.stat.exists
 
 
 - name: Copy a new "sudoers" file into place, after passing validation with visudo

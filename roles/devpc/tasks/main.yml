@@ -39,5 +39,13 @@
 
 
 #
+# @TODO: Install Lastpass
+#
+
+- name: Install Lastpass
+  include_tasks: lastpass.yaml
+  when: false
+
+#
 # @TODO: Install lastpass-cli
 #

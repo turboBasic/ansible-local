@@ -5,30 +5,32 @@
   shell: command -v git-crypt >/dev/null 2>&1
   register: gitcrypt_exists
   ignore_errors: yes
+  changed_when: false
 
+- debug:
+    msg: "gitcrypt_exists = {{ gitcrypt_exists }}"
 
 - apt:
-    update_cache: yes
     name:
       - make
       - g++
       - libssl-dev
       - openssl
     state: present
-  when: gitcrypt_exists != 0
+  when: gitcrypt_exists.changed
 
 
 - shell: git clone https://github.com/AGWA/git-crypt.git  
   args:
     chdir: "{{ my_home }}/Downloads"
     creates: "{{ my_home }}/Downloads/git-crypt"
-  when: gitcrypt_exists != 0
+  when: gitcrypt_exists.changed
 
 
 - shell: "make; make install PREFIX=/usr/local"
   args:
     chdir: "{{ my_home }}/Downloads/git-crypt"
-  when: gitcrypt_exists != 0
+  when: gitcrypt_exists.changed
 
 
 - file:
