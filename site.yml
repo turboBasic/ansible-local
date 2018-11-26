@@ -3,6 +3,10 @@
   hosts: self
   become: yes 
 
+  vars:
+    install_lastpass: false
+    install_vscode: true
+
   roles:
     - devpc
 

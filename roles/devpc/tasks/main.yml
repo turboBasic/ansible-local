@@ -5,7 +5,7 @@
   include_tasks: users.yaml
 
 
-- name: Install packages
+- name: Install common packages
   apt:
     update_cache: yes
     name:
@@ -28,6 +28,7 @@
 
 - name: Install VS Code
   include_tasks: vscode.yaml    
+  when: install_vscode
 
 
 - name: Install Vagrant and companions
@@ -38,13 +39,9 @@
   include_tasks: dotfiles.yaml
 
 
-#
-# @TODO: Install Lastpass
-#
-
 - name: Install Lastpass
   include_tasks: lastpass.yaml
-  when: false
+  when: install_lastpass
 
 #
 # @TODO: Install lastpass-cli

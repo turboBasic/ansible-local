@@ -3,4 +3,3 @@
 
 me: "{{ lookup('env', 'USER') }}"
 my_home: "{{ lookup('env', 'HOME') }}"
-install_vscode: yes
