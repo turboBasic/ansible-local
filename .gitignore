@@ -1,3 +1,6 @@
+local.key
+
+# Ansible files
 *.retry
 /hosts
 /inventory
