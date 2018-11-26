@@ -1,0 +1,35 @@
+---
+
+# in Ubuntu 18.10 Lastpass CLI can be installed as usual package
+
+- name: Install Lastpass CLI
+  apt:
+    name: lastpass-cli
+    state: present
+
+    
+
+- name: Install Laspass browser extensions
+  shell: curl --location --remote-name https://download.cloud.lastpass.com/linux/lplinux.tar.bz2
+  args:
+    chdir: "{{ my_home }}/Downloads"
+    creates: "{{ my_home }}/Downloads/lplinux.tar.bz2"
+  when: install_lastpass_gui
+
+- shell: mkdir lplinux; tar xjf lplinux.tar.bz2 --directory lplinux
+  args:
+    chdir: "{{ my_home }}/Downloads"
+    creates: "{{ my_home }}/Downloads/lplinux"
+  when: install_lastpass_gui
+
+- shell: ./install_lastpass.sh
+  args:
+    chdir: "{{ my_home }}/Downloads/lplinux"
+  when: install_lastpass_gui    
+
+- file:
+    path: "{{ my_home }}/Downloads/lplinux"
+    state: absent
+
+
+...

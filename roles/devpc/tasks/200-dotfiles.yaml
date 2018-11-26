@@ -1,7 +1,8 @@
 ---
 # Install dotfiles
 
-- stat:
+- name: Check if dotfiles exist
+  stat:
     path: "{{ my_home }}/dotfiles"
   register: dotfiles
 

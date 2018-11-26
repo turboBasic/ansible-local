@@ -1,0 +1,16 @@
+---
+
+- name: Install common packages
+  apt:
+    update_cache: yes
+    name:
+      - git
+      - mc
+      - neovim
+      - stow
+      - tree
+      - xclip
+      - zeal
+    state: present
+
+...

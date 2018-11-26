@@ -4,7 +4,7 @@
   become: yes 
 
   vars:
-    install_lastpass: false
+    install_lastpass_gui: false
     install_vscode: true
     install_chrome: yes
 

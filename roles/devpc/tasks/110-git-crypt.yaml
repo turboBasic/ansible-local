@@ -1,0 +1,10 @@
+---
+# Install git-crypt
+
+# in Ubuntu 18.10 can be installed as usual package
+
+- name: Install git-crypt
+  apt:
+    name: git-crypt
+    state: present
+

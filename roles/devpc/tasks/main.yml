@@ -1,54 +1,27 @@
 ---
 # tasks file for devpc
 
-- name: Create users
-  include_tasks: users.yaml
+- include_tasks: 090-create-users.yaml
+- include_tasks: 100-common.yaml
+- include_tasks: 100-ssh-server.yaml
 
+- include_tasks: 110-git-crypt.yaml  
+- include_tasks: 110-lastpass.yaml
 
-- name: Install common packages
-  apt:
-    update_cache: yes
-    name:
-      - git
-      - mc
-      - neovim
-      - stow
-      - tree
-      - xclip
-      - zeal
-    state: present
-
-
-- name: Install SSH server
-  include_tasks: ssh_server.yaml
-
-
-- name: Install git-crypt
-  include_tasks: git-crypt.yaml  
-
-
-- name: Install VS Code
-  include_tasks: vscode.yaml    
-  when: install_vscode
-
-
-- name: Install Vagrant and companions
-  include_tasks: vagrant.yaml
 
 
 - name: Install dotfiles
-  include_tasks: dotfiles.yaml
+  include_tasks: 200-dotfiles.yaml
+
 
 
 - name: Install Google Chrome
-  include_tasks: chrome.yaml
+  include_tasks: 300-chrome.yaml
   when: install_chrome
 
+- name: Install VS Code
+  include_tasks: 310-visual-studio-code.yaml    
+  when: install_vscode
 
-- name: Install Lastpass
-  include_tasks: lastpass.yaml
-  when: install_lastpass
-
-
-- name: Install Lastpass CLI
-  include_tasks: lastpass-cli.yaml
+- name: Install Vagrant and companions
+  include_tasks: 350-vagrant.yaml
