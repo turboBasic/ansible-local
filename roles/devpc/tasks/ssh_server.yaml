@@ -1,0 +1,17 @@
+---
+
+- apt:
+    name: openssh-server
+    state: present
+
+- name: Configure SSH server
+  copy:
+    src: etc_ssh/sshd_config
+    dest: /etc/ssh/
+  notify: restart ssh server
+
+- name: Start SSH server
+  service:
+    name: ssh
+    state: started
+    enabled: true

@@ -1,0 +1,9 @@
+---
+- name: Provision local machine
+  hosts: self
+  become: yes 
+
+  roles:
+    - devpc
+
+...

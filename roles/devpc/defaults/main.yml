@@ -1,0 +1,5 @@
+---
+# defaults file for devpc
+
+me: mao
+install_vscode: yes

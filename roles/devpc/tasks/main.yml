@@ -1,0 +1,35 @@
+---
+# tasks file for devpc
+
+- name: Create users
+  include_tasks: users.yaml
+
+
+- name: Install packages
+  apt:
+    update_cache: yes
+    name:
+      - git
+      - mc
+      - neovim
+      - virtualbox
+      - virtualbox-ext-pack
+      - vagrant
+      - xclip
+      - zeal
+    state: present
+
+- name: Install VS Code
+  include_tasks: vscode.yaml    
+
+
+- name: Install SSH server
+  include_tasks: ssh_server.yaml
+
+
+
+#- name: Clone dotfiles
+#  shell: git clone https://github.com/turboBasic/dotfiles.git
+#  args:
+#    chdir: "/home/{{ me|quote }}"
+#    creates: "/home/{{ me|quote }}/dotfiles"
