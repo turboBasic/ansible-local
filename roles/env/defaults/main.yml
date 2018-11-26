@@ -1,0 +1,5 @@
+---
+# defaults file for env
+
+me: "{{ lookup('env', 'USER') }}"
+my_home: "{{ lookup('env', 'HOME') }}"

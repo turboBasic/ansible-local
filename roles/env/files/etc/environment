@@ -1,0 +1,31 @@
+# Tracing environment files
+TRACE_ENV=/etc/environment
+TRACE_SCRIPT=
+
+
+# Path
+# ====
+#
+#   Ubuntu 18.10 original:
+#   PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+
+# Locale system-wide
+LANG=en_US.UTF-8
+LC_ADDRESS=uk_UA.UTF-8
+LC_IDENTIFICATION=uk_UA.UTF-8
+LC_MEASUREMENT=uk_UA.UTF-8
+LC_MONETARY=uk_UA.UTF-8
+LC_NAME=uk_UA.UTF-8
+LC_NUMERIC=en_DK.UTF-8
+LC_PAPER=uk_UA.UTF-8
+LC_TELEPHONE=uk_UA.UTF-8
+LC_TIME=en_DK.UTF-8
+
+# Timezone
+TZ=Europe/Kiev
+
+
+# Web server
+WWW_BASE=/var/www

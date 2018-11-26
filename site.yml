@@ -1,7 +1,7 @@
 ---
 - name: Provision local machine
   hosts: self
-  become: yes 
+  become: yes
 
   vars:
     install_lastpass_gui: false
@@ -9,6 +9,7 @@
     install_chrome: yes
 
   roles:
-    - devpc
+    - { role: env, tags: [ env, all ] }
+    - { role: devpc, tags: [ all ] }
 
 ...

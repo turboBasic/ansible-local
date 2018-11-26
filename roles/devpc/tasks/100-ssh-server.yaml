@@ -7,7 +7,7 @@
 
 - name: Configure SSH server
   copy:
-    src: etc_ssh/sshd_config
+    src: etc/ssh/sshd_config
     dest: /etc/ssh/
   notify: restart ssh server
 

@@ -1,0 +1,42 @@
+---
+# tasks file for env
+
+- copy:
+    src: etc/environment
+    dest: /etc
+    mode: 0644
+    backup: yes
+
+- copy:
+    src: etc/sudoers
+    dest: /etc
+    mode: 0400
+    backup: yes
+    validate: /usr/sbin/visudo -cf %s
+
+- copy:
+    src: etc/sudoers.d/timeout
+    dest: /etc/sudoers.d
+    mode: 0400
+    backup: yes
+
+- copy:
+    src: etc/security/pam_env.conf
+    dest: /etc/security
+    mode: 0644
+    backup: yes
+
+- copy:
+    src: etc/pam.d/
+    dest: /etc/pam.d
+    mode: 0644
+    backup: yes
+
+- copy:
+    src: home/.pam_environment
+    dest: "{{ my_home }}"
+    backup: yes
+
+- copy:
+    src: home/.config/environment.d
+    dest: "{{ my_home }}/.config/"
