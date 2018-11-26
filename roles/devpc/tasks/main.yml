@@ -39,6 +39,11 @@
   include_tasks: dotfiles.yaml
 
 
+- name: Install Google Chrome
+  include_tasks: chrome.yaml
+  when: install_chrome
+
+
 - name: Install Lastpass
   include_tasks: lastpass.yaml
   when: install_lastpass

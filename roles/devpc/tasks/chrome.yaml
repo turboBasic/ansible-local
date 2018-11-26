@@ -1,0 +1,15 @@
+---
+# Install Google Chrome
+
+- name: Check if google-chrome installed
+  shell: command -v google-chrome --version >/dev/null 2>&1
+  register: chrome_exists
+  ignore_errors: yes
+  changed_when: false
+
+- debug:
+    msg: "chrome_exists = {{ chrome_exists }}"
+
+- apt:
+    deb: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb 
+  when: chrome_exists.changed  
