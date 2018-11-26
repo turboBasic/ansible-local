@@ -9,7 +9,9 @@
     install_chrome: yes
 
   roles:
-    - { role: env, tags: [ env, all ] }
-    - { role: devpc, tags: [ all ] }
+    - role: env
+      tags: [ env, all ]
+    - role: devpc
+      tags: [ all ]
 
 ...

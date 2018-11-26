@@ -35,8 +35,13 @@
 - copy:
     src: home/.pam_environment
     dest: "{{ my_home }}"
+    owner: "{{ me }}"
+    group: "{{ me }}"
     backup: yes
+
 
 - copy:
     src: home/.config/environment.d
     dest: "{{ my_home }}/.config/"
+    owner: "{{ me }}"
+    group: "{{ me }}"
