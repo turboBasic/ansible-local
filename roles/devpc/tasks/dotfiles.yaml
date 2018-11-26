@@ -1,0 +1,20 @@
+---
+# Install dotfiles
+
+- stat:
+    path: "{{ my_home }}/dotfiles"
+  register: dotfiles
+
+- name: Clone dotfiles
+  shell: git clone https://github.com/turboBasic/dotfiles.git
+  args:
+    chdir: "{{ my_home }}"
+    creates: "{{ my_home }}/dotfiles"
+  when: not dotfiles.stat.exists
+
+- name: Fix owner if run as root
+  file:
+    path: "{{ my_home }}/dotfiles"
+    owner: "{{ me }}"
+    group: "{{ me }}"
+    recurse: yes
