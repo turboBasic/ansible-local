@@ -1,0 +1,10 @@
+---
+# Install Vagrant, Virtualbox and companions
+
+- apt:
+    update_cache: yes
+    name:
+      - virtualbox
+      - virtualbox-ext-pack
+      - vagrant
+    state: present

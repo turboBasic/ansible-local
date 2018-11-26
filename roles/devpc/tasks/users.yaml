@@ -48,6 +48,18 @@
     - { name: astaroth, path: /home/astaroth/.ssh, mode: '0700' }
     - { name: astaroth, path: /home/astaroth/.ssh/authorized_keys, mode: '0644' }
 
+
+- stat:
+    path: "/home/{{ me }}/.ssh/config"
+  register: ssh_config
+
+- name: ssh config to access Github
+  copy: 
+    src: .ssh/config
+    dest: "/home/{{ me }}/.ssh/"
+  when: ssh_config.stat.path is not defined
+
+
 - name: Copy a new "sudoers" file into place, after passing validation with visudo
   copy:
     src: etc/sudoers

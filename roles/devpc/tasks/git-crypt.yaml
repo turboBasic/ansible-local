@@ -1,0 +1,36 @@
+---
+# Install git-crypt
+
+- name: Check if git-crypt installed
+  shell: command -v git-crypt >/dev/null 2>&1
+  register: gitcrypt_exists
+  ignore_errors: yes
+
+
+- apt:
+    update_cache: yes
+    name:
+      - make
+      - g++
+      - libssl-dev
+      - openssl
+    state: present
+  when: gitcrypt_exists != 0
+
+
+- shell: git clone https://github.com/AGWA/git-crypt.git  
+  args:
+    chdir: "{{ my_home }}/Downloads"
+    creates: "{{ my_home }}/Downloads/git-crypt"
+  when: gitcrypt_exists != 0
+
+
+- shell: "make; make install PREFIX=/usr/local"
+  args:
+    chdir: "{{ my_home }}/Downloads/git-crypt"
+  when: gitcrypt_exists != 0
+
+
+- file:
+    path: "{{ my_home }}/Downloads/git-crypt"
+    state: absent

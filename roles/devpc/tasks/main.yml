@@ -12,24 +12,41 @@
       - git
       - mc
       - neovim
-      - virtualbox
-      - virtualbox-ext-pack
-      - vagrant
+      - stow
       - xclip
       - zeal
     state: present
 
+
+- name: Install git-crypt
+  include_tasks: git-crypt.yaml  
+
+
 - name: Install VS Code
   include_tasks: vscode.yaml    
+
+
+- name: Install Vagrant and companions
+  include_tasks: vagrant.yaml
 
 
 - name: Install SSH server
   include_tasks: ssh_server.yaml
 
 
+- stat:
+    path: "{{ my_home }}/dotfiles"
+  register: dotfiles
 
-#- name: Clone dotfiles
-#  shell: git clone https://github.com/turboBasic/dotfiles.git
-#  args:
-#    chdir: "/home/{{ me|quote }}"
-#    creates: "/home/{{ me|quote }}/dotfiles"
+- name: Clone dotfiles
+  shell: git clone https://github.com/turboBasic/dotfiles.git
+  args:
+    chdir: "{{ my_home }}"
+    creates: "{{ my_home }}/dotfiles"
+  when: not dotfiles.stat.exists
+
+- file:
+    path: "{{ my_home }}/dotfiles"
+    owner: "{{ me }}"
+    group: "{{ me }}"
+    recurse: yes
