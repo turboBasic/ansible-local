@@ -33,6 +33,12 @@
     backup: yes
 
 - copy:
+    src: root/
+    dest: /root
+    mode: 0644
+    backup: yes
+
+- copy:
     src: home/.pam_environment
     dest: "{{ my_home }}"
     owner: "{{ me }}"
