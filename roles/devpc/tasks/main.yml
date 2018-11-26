@@ -13,6 +13,7 @@
       - mc
       - neovim
       - stow
+      - tree
       - xclip
       - zeal
     state: present
@@ -48,6 +49,6 @@
   include_tasks: lastpass.yaml
   when: install_lastpass
 
-#
-# @TODO: Install lastpass-cli
-#
+
+- name: Install Lastpass CLI
+  include_tasks: lastpass-cli.yaml

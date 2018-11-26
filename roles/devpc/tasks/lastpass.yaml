@@ -5,7 +5,7 @@
     chdir: "{{ my_home }}/Downloads"
     creates: "{{ my_home }}/Downloads/lplinux.tar.bz2"
 
-- shell: mkdir lplinux; tar xjvf lplinux.tar.bz2 --directory lplinux
+- shell: mkdir lplinux; tar xjf lplinux.tar.bz2 --directory lplinux
   args:
     chdir: "{{ my_home }}/Downloads"
     creates: "{{ my_home }}/Downloads/lplinux"
