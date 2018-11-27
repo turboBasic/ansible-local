@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+
+#
+# $XDG_CONFIG_HOME/bash/bash_profile: executed by the command interpreter for login shells.
+#
+
+
+# 1. /etc/profile
+# 2. /etc/profile -> /etc/bash.bashrc
+# 	cancelled:      /etc/profile -> /etc/profile.d/bash_in_xdg_config_home.sh
+# 	cancelled:      /etc/profile.d/bash_in_xdg_config_home.sh -> ${XDG_CONFIG_HOME}/bash/bash_profile
+# 3. ~/.bash_profile 	(built-in behaviour)
+# 4. if .bash_profile is called from $HOME:
+# 	~/.bash_profile -> ~/.bashrc
+#    else if .bash_profile is called from $XDG_CONFIG_HOME/bash:
+# 	${XDG_CONFIG_HOME}/bash/bashrc
+#
+# DONE: check if running from $XDG_CONFIG_HOME or from $HOME and source $XDG_CONFIG_HOME/bashrc if former
+#
+
+TRACE_SCRIPT=${TRACE_SCRIPT:+"${TRACE_SCRIPT}:"}${BASH_SOURCE}
+
+
+# in Ubuntu 18 system.d does not source ~/.config/environment.d/*.conf files if user logs into tty3-tty7 (ie. not in GDM)
+# we will do it ourselves in order to make environment in tty* the sames as in GDM
+if [[ ! ${ENV_TRACE} =~ .*environment\.d.* ]]
+then
+    # checking if directory exists and there are files in it in order to avoid runtime error	
+    if [[ -d "${HOME}/.config/environment.d/" ]] && ! find "${HOME}/.config/environment.d/" ! -name . -prune -exec false {} +
+    then
+        for f in ${HOME}/.config/environment.d/*.conf
+	do
+            source "${f}"
+	done
+    fi
+    # strip variable names, join them and export resulting set of variables
+    eval "export $(cat ~/.config/environment.d/*.conf | grep '^\w' | sed 's/=.*$//g' | paste -sd ' ' - )"
+fi
+
+
+# load functions only if they were not loaded before
+if ! type sourceDirectory &> /dev/null; then
+    [[ -f ${XDG_CONFIG_HOME}/bash/bash_functions.sh ]] && . ${XDG_CONFIG_HOME}/bash/bash_functions.sh
+fi
+
+
+
+# the default umask is set in /etc/profile; for setting the umask
+# for ssh logins, install and configure the libpam-umask package.
+umask 022
+
+
+case $BASH_SOURCE in
+    "${XDG_CONFIG_HOME}/bash/"* )
+        [[ -f ${XDG_CONFIG_HOME}/bash/bashrc ]] && source ${XDG_CONFIG_HOME}/bash/bashrc  ;;
+    "$HOME/.bash_profile" | "$HOME/.profile" )  
+        [[ -f $HOME/.bashrc ]] && source $HOME/.bashrc ;;
+esac
+
+
+# Ruby's rbenv
+# pathPrepend ~/.rbenv/bin
+if [[ -d ~/.rbenv/bin ]]; then
+    [[ ! -f ~/bin/rbenv ]] && ln -s $(readlink -f ~/.rbenv/bin/rbenv) ~/bin/rbenv
+    eval "$(rbenv init -)"
+fi
+
+
+# LinuxBrew
+[[ -d ~/.linuxbrew/bin ]] && _brew=${HOME} || _brew=/home/linuxbrew 
+pathPrepend ${_brew}/.linuxbrew/bin
+pathPrepend ${_brew}/.linuxbrew/sbin
+unset _brew
+
+# Rust
+[[ -d ~/.cargo/bin ]] && pathPrepend ~/.cargo/bin
+
+
+# echo final trace result
+printf "\nTRACE of autoloaded scripts:\n"
+echo ${TRACE_SCRIPT} | tr : \\n
+printf "\nTRACE of environment files:\n"
+echo ${TRACE_ENV} | tr : \\n
+unset TRACE_ENV TRACE_ENV_TMP

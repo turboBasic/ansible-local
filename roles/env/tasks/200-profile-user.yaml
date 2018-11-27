@@ -1,0 +1,34 @@
+---
+
+# profile current user
+
+- name: home/.config/bash
+  copy:
+    src: profile/home/.config/bash
+    dest: "{{ my_home }}/.config/"
+    owner: "{{ me }}"
+    group: "{{ me }}"
+
+
+# bash profile  - additional links
+
+- name: bash  - additional links
+  file:
+    src: "{{ my_home }}/.config/bash/bashrc"
+    dest: "{{ my_home }}/.bashrc"
+    state: link
+    force: yes
+
+- name: bash  - additional links
+  file:
+    src: "{{ my_home }}/.config/bash/bash_profile"
+    dest: "{{ my_home }}/.bash_profile"
+    state: link
+    force: yes
+
+- name: bash  - additional links
+  file:
+    src: "{{ my_home }}/.config/bash/bash_logout"
+    dest: "{{ my_home }}/.bash_logout"
+    state: link
+    force: yes

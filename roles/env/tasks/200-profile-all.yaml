@@ -1,0 +1,31 @@
+---
+
+# profile all users
+
+- name: etc/bash.bashrc
+  copy:
+    src: profile/etc/bash.bashrc
+    dest: /etc
+    backup: yes
+
+- name: etc/profile
+  copy:
+    src: profile/etc/profile
+    dest: /etc
+    backup: yes
+
+
+# sudoers
+
+- copy:
+    src: profile/etc/sudoers
+    dest: /etc
+    mode: 0400
+    backup: yes
+    validate: /usr/sbin/visudo -cf %s
+
+- copy:
+    src: profile/etc/sudoers.d/timeout
+    dest: /etc/sudoers.d
+    mode: 0400
+    backup: yes

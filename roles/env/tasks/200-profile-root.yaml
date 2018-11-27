@@ -1,0 +1,15 @@
+---
+
+# bash profile - root user
+
+- name: root/.bashrc
+  copy:
+    src: profile/root/.bashrc
+    dest: /root
+    backup: yes
+
+- name: root/.profile
+  copy:
+    src: profile/root/.profile
+    dest: /root
+    backup: yes

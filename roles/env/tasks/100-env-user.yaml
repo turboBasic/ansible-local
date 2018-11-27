@@ -1,0 +1,16 @@
+---
+# Environment - current user
+
+- copy:
+    src: environment/home/.pam_environment
+    dest: "{{ my_home }}/.pam_environment"
+    owner: "{{ me }}"
+    group: "{{ me }}"
+
+
+
+- copy:
+    src: environment/home/.config/environment.d
+    dest: "{{ my_home }}/.config/"
+    owner: "{{ me }}"
+    group: "{{ me }}"

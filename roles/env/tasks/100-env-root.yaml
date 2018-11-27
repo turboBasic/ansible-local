@@ -1,0 +1,10 @@
+---
+# Environment - root user
+
+- copy:
+    src: environment/root/
+    dest: /root
+    mode: 0644
+    backup: yes
+
+...

@@ -1,0 +1,22 @@
+---
+# Environment variables - all users (system)
+
+- copy:
+    src: environment/etc/environment
+    dest: /etc
+    mode: 0644
+    backup: yes
+
+- copy:
+    src: environment/etc/security/pam_env.conf
+    dest: /etc/security
+    mode: 0644
+    backup: yes
+
+- copy:
+    src: environment/etc/pam.d/
+    dest: /etc/pam.d
+    mode: 0644
+    backup: yes
+
+...
