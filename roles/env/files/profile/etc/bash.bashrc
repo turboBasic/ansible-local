@@ -20,9 +20,9 @@ TRACE_SCRIPT=${TRACE_SCRIPT:+"${TRACE_SCRIPT}:"}${BASH_SOURCE}
 # shopt -s globstar                   # If set, the pattern "**" used in a pathname expansion context will match all files and zero or more directories and subdirectories.
 shopt -s histappend                 # append to the history file, don't overwrite it
 shopt -s checkwinsize               # check the window size after each command and, if necessary,  update the values of LINES and COLUMNS
-HISTCONTROL=ignoreboth              # don't put duplicate lines or lines starting with space in the history. 
-HISTSIZE=1000
-HISTFILESIZE=2000
+HISTCONTROL=ignoreboth              # don't put duplicate lines or lines starting with space in the history.
+HISTSIZE=10000
+HISTFILESIZE=20000
 HISTTIMEFORMAT='%F %T '             # record timestamps
 PROMPT_COMMAND='history -a'         # save commands in history immediately
 
@@ -39,12 +39,12 @@ BASH_RC=yes
 
 
 
-# enable bash completion in interactive shells                      
-if ! shopt -oq posix; then                                          
-    if [ -f /usr/share/bash-completion/bash_completion ]; then        
-        . /usr/share/bash-completion/bash_completion                    
-    elif [ -f /etc/bash_completion ]; then                            
-        . /etc/bash_completion                                          
-    fi                                                                
-fi                                                                  
+# enable bash completion in interactive shells
+if ! shopt -oq posix; then
+    if [ -f /usr/share/bash-completion/bash_completion ]; then
+        . /usr/share/bash-completion/bash_completion
+    elif [ -f /etc/bash_completion ]; then
+        . /etc/bash_completion
+    fi
+fi
 

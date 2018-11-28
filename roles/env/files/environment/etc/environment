@@ -4,11 +4,7 @@ TRACE_SCRIPT=
 
 
 # Path
-# ====
-#
-#   Ubuntu 18.10 original:
-#   PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
-PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
 
 
 # Locale system-wide
