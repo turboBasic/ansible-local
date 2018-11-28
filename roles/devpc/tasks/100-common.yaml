@@ -5,9 +5,12 @@
     update_cache: yes
     name:
       - git
+      - httpie
       - mc
       - neovim
       - stow
+      - tmux
+      - tmuxinator
       - tree
       - xclip
       - zeal

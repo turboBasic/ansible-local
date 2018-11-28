@@ -6,6 +6,7 @@
     dest: "{{ my_home }}/.pam_environment"
     owner: "{{ me }}"
     group: "{{ me }}"
+    mode: 0600
 
 
 
@@ -14,3 +15,4 @@
     dest: "{{ my_home }}/.config/"
     owner: "{{ me }}"
     group: "{{ me }}"
+    mode: 0700

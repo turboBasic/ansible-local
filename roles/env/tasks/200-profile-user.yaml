@@ -16,6 +16,8 @@
   file:
     src: "{{ my_home }}/.config/bash/bashrc"
     dest: "{{ my_home }}/.bashrc"
+    owner: "{{ me }}"
+    group: "{{ me }}"
     state: link
     force: yes
 
@@ -23,6 +25,8 @@
   file:
     src: "{{ my_home }}/.config/bash/bash_profile"
     dest: "{{ my_home }}/.bash_profile"
+    owner: "{{ me }}"
+    group: "{{ me }}"
     state: link
     force: yes
 
@@ -30,5 +34,7 @@
   file:
     src: "{{ my_home }}/.config/bash/bash_logout"
     dest: "{{ my_home }}/.bash_logout"
+    owner: "{{ me }}"
+    group: "{{ me }}"
     state: link
     force: yes
