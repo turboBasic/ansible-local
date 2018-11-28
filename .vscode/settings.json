@@ -1,0 +1,11 @@
+{
+  "files.associations": {
+      "environment": "ini",
+      "login": "properties",
+      "su": "properties",
+      "*.pam_environment": "properties",
+      "*.key": "properties",
+      "profile": "shellscript",
+      "sudoers": "properties",
+  },
+}
