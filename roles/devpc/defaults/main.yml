@@ -1,5 +1,6 @@
 ---
 # defaults file for devpc
 
+# {{ ansible_user_id }}
 me: "{{ lookup('env', 'USER') }}"
 my_home: "{{ lookup('env', 'HOME') }}"

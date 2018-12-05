@@ -5,10 +5,14 @@
 - include_tasks: 100-common.yaml
 - include_tasks: 100-ssh-server.yaml
 
-- include_tasks: 110-git-crypt.yaml  
+- include_tasks: 110-git-crypt.yaml
 - include_tasks: 110-lastpass.yaml
 
+- include_tasks: 137-ruby.yaml
+- include_tasks: 137-tools-dependent-on-ruby.yaml
 
+- include_tasks: 138-node.yaml
+- include_tasks: 138-tools-dependent-on-node.yaml
 
 - name: Install dotfiles
   include_tasks: 200-dotfiles.yaml
@@ -20,7 +24,7 @@
   when: install_chrome
 
 - name: Install VS Code
-  include_tasks: 310-visual-studio-code.yaml    
+  include_tasks: 310-visual-studio-code.yaml
   when: install_vscode
 
 - name: Install Vagrant and companions

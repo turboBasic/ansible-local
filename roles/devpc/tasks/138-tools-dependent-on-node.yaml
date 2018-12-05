@@ -1,0 +1,8 @@
+---
+
+- name: tldr
+  npm:
+    name: tldr
+    global: yes
+
+
