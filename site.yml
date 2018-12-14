@@ -17,7 +17,7 @@
     - role: node
       nvm_user: "{{ me }}"
       nvm_version: "v0.33.11"
-      nvm_node_version: "11.3.0"   # or "node" for the latest
+      nvm_node_version: "node"   # or "node" for the latest
       nvm_npm_pkgs:
         - pkg: yarn
           version: "*"
