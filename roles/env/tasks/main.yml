@@ -2,17 +2,17 @@
 # tasks file for env
 
 - name: Environment - all users
-  include_tasks: 100-env-all.yaml
+  import_tasks: 100-env-all.yaml
   tags:
     - env.all
 
 - name: Environment - root
-  include_tasks: 100-env-root.yaml
+  import_tasks: 100-env-root.yaml
   tags:
     - env.root
 
 - name: Environment - user
-  include_tasks: 100-env-user.yaml
+  import_tasks: 100-env-user.yaml
   tags:
     - env.user
 
