@@ -3,20 +3,30 @@
 
 - name: Environment - all users
   include_tasks: 100-env-all.yaml
+  tags:
+    - env.all
 
 - name: Environment - root
   include_tasks: 100-env-root.yaml
+  tags:
+    - env.root
 
 - name: Environment - user
   include_tasks: 100-env-user.yaml
+  tags:
+    - env.user
 
 
 
 - name: Profile - all users
-  include_tasks: 200-profile-all.yaml
+  import_tasks: 200-profile-all.yaml
+  tags:
+    - profile.all
 
 - name: Profile - root
-  include_tasks: 200-profile-root.yaml
+  import_tasks: 200-profile-root.yaml
+  tags:
+    - profile.root
 
 # - name: Profile - user
 #   include_tasks: 200-profile-user.yaml

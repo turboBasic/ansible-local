@@ -12,7 +12,7 @@
 
   roles:
     - role: env
-      tags: [env, all]
+      tags: [env, profile, all]
 
     - role: node
       nvm_user: "{{ me }}"
@@ -24,7 +24,7 @@
       tags: [node, all]
 
     - role: devpc
-      tags: [all]
+      tags: [devpc, all]
 
 
 
