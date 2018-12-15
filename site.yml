@@ -3,6 +3,9 @@
   hosts: self
   become: yes
 
+  vars_files:
+    - passwd.yml
+
   vars:
     install_lastpass_gui: false
     install_vscode: true

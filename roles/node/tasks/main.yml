@@ -6,22 +6,28 @@
   changed_when: false
   register: nvm_user_home
 
+- name: Set nvm base directory
+  raw: |
+    if [[ -v NVM_DIR ]]; then
+        echo $NVM_DIR
+    elif [[ -v XDG_CONFIG_HOME ]]; then
+        echo $XDG_CONFIG_HOME/nvm
+    else
+        echo $HOME/.nvm
+    fi
+  args:
+    executable: /bin/bash
+  become_user: "{{ nvm_user }}"
+  register: nvm_dir_raw
+  changed_when: false
+
 - set_fact:
-    nvm_dir: "{{ nvm_user_home }}/.nvm"
-
-- name: Check if nvm is installed
-  shell: tarsnap --version | grep {{ tarsnap_version }} --color=never
-  register: tarnsap_installed
-  changed_when: "tarnsap_installed.stderr != ''"
-  ignore_errors: yes
-
-- stat:
-    path: "{{ nvm_dir}}/nvm.sh"
-  register: nvm
+    nvm_dir: "{{ nvm_dir_raw.stdout | trim }}"
 
 - name: Execute nvm installation script
   shell: >
       curl -o- https://raw.githubusercontent.com/creationix/nvm/{{ nvm_version }}/install.sh | bash
-  when: nvm.stat.exists == false
   args:
+    creates: "{{ nvm_dir }}/nvm.sh"
     warn: false
+  become_user: "{{ nvm_user }}"
