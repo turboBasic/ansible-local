@@ -14,6 +14,7 @@ TRACE_SCRIPT=${TRACE_SCRIPT:+"${TRACE_SCRIPT}:"}${BASH_SOURCE}
 
 # If not running interactively, don't do anything
 [[ -z $- ]] && return
+[[ $BASH_RC == 'yes' ]] && return
 
 
 # See bash(1) for more options
@@ -33,12 +34,6 @@ PROMPT_COMMAND='history -a'         # save commands in history immediately
 # set a fancy prompt (non-color, overwrite the one in /etc/profile)
 PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 
-
-# set variable BASH_RC so that not to run this file twice
-BASH_RC=yes
-
-
-
 # enable bash completion in interactive shells
 if ! shopt -oq posix; then
     if [ -f /usr/share/bash-completion/bash_completion ]; then
@@ -48,3 +43,5 @@ if ! shopt -oq posix; then
     fi
 fi
 
+# set variable BASH_RC so that not to run this file twice
+BASH_RC=yes
