@@ -1,15 +1,27 @@
 ---
 
-- name: NVM | main | Install Required Packages
-  apt: name={{ item }} state=installed update_cache=yes
-  with_items: "{{ required_packages }}"
+- name: Get user's home dir
+  shell: >
+      getent passwd {{ nvm_user }} | cut -d: -f6
+  changed_when: false
+  register: nvm_user_home
 
-- include: nvm.yml
+- set_fact:
+    nvm_dir: "{{ nvm_user_home }}/.nvm"
 
-- include: node.yml
+- name: Check if nvm is installed
+  shell: tarsnap --version | grep {{ tarsnap_version }} --color=never
+  register: tarnsap_installed
+  changed_when: "tarnsap_installed.stderr != ''"
+  ignore_errors: yes
 
-- include: pkgs.yml
-  when: "{{ nvm_npm_pkgs | length }} > 0"
+- stat:
+    path: "{{ nvm_dir}}/nvm.sh"
+  register: nvm
 
-# needed in order to preserve idempotency due to globally installed packages
-- include: permission.yml
+- name: Execute nvm installation script
+  shell: >
+      curl -o- https://raw.githubusercontent.com/creationix/nvm/{{ nvm_version }}/install.sh | bash
+  when: nvm.stat.exists == false
+  args:
+    warn: false
