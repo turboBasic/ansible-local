@@ -1,7 +1,0 @@
-# sample of inventory file for Ansible. Fill-in as appropriate and rename to 'hosts'
-
-localhost
-
-[self]
-<<name of your pc>> ansible_connection=local
-
