@@ -1,11 +1,24 @@
 {
   "files.associations": {
+      "*.key": "plaintext",
       "environment": "ini",
       "login": "properties",
       "su": "properties",
       "*.pam_environment": "properties",
-      "*.key": "properties",
       "profile": "shellscript",
       "sudoers": "properties",
   },
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#18134e",
+    "titleBar.activeBackground": "#18134e",
+    "titleBar.activeForeground": "#FAFAFB"
+  },
+  "files.exclude": {
+    "**/.git": false,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true
+  },
+  "explorerExclude.backup": null,
 }
