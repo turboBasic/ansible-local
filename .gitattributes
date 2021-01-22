@@ -1,21 +1,6 @@
 # Do not encrypt .gitattributes
-.gitattributes !filter !diff
+.gitattributes      !filter !diff
 
-# Test file
-secretfile                        filter=git-crypt diff=git-crypt
-
-# Default files to be encrypted by git-crypt
-*.cert	                          filter=git-crypt diff=git-crypt
-*.key 	                          filter=git-crypt diff=git-crypt
-*.crt 	                          filter=git-crypt diff=git-crypt
-*.gpg 	                          filter=git-crypt diff=git-crypt
-
-# Environment - tokens
-/**/*secret*	                    filter=git-crypt diff=git-crypt
-/**/*token*	                      filter=git-crypt diff=git-crypt
-
-# VS Code files
-syncLocalSettings.json	          filter=git-crypt diff=git-crypt
-
-# ssh
-.ssh/config		                    filter=git-crypt diff=git-crypt
+*secret*            filter=git-crypt diff=git-crypt
+*token*             filter=git-crypt diff=git-crypt
+*.key               filter=git-crypt diff=git-crypt
