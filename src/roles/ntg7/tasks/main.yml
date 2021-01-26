@@ -1,8 +1,44 @@
 ---
+
 - name: Install ntg7-specific packages
   apt:
     update_cache: yes
     name:
+      - ack
+      - aria2
+      - autoconf
+      - copyq
+      - code
+      - gpg
       - jq
+      - lastpass-cli
+      - stow
+      - xclip
       - xmlstarlet
+      - xxd
       - zeal
+      - zsh
+
+# Install snaps with classic confinement
+- name: Install nvim --classic
+  snap:
+    name: nvim
+    classic: yes
+
+- name: Install snapcraft --classic
+  snap:
+    name: nvim
+    classic: yes
+
+# Only in Ubuntu 18. Use default apt repository in Ubuntu 20
+- name: Install tmux --classic
+  snap:
+    name: tmux-non-dead
+    classic: yes
+
+# Install other snaps
+- name: Other snaps
+  snap:
+    name:
+      - emote
+      - flameshot
