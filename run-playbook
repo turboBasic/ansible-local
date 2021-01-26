@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+_oldOptions="$(set +o); set -${-//i/}"
+set -o errexit
+set -o nounset
+set -o pipefail
+
+trap 'onExit $? $LINENO' EXIT
+
+onExit() {
+    # Restore options
+    $_oldOptions || true
+    unset _oldOptions || true
+}
+
+getScriptDir() {
+    dirname "$( realpath "${BASH_SOURCE[0]}" )"
+}
+
+isTruth() {
+    local value
+    value=$(echo $1)
+
+    [[ -z "$value"
+       || "$value" == "0"
+       || "$value" == "false"
+       || "$value" == "no"
+       || "$value" =~ ^[[:blank:]]+$
+    ]]  && return 666
+    return 0
+}
+
+
+isTruth "${DRY_RUN:-false}" && cmd="echo" || cmd=''
+(
+    set -o xtrace
+    $cmd cd "$(getScriptDir)/src"
+    $cmd export ANSIBLE_CONFIG="$(getScriptDir)/src/ansible.cfg"
+    $cmd ansible-playbook "${@}"
+    set +o xtrace
+)
