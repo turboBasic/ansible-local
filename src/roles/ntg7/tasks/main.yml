@@ -1,0 +1,8 @@
+---
+- name: Install ntg7-specific packages
+  apt:
+    update_cache: yes
+    name:
+      - jq
+      - xmlstarlet
+      - zeal

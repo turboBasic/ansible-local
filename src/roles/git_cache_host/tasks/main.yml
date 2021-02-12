@@ -1,0 +1,5 @@
+- name: Install git cache
+  apt:
+    update_cache: yes
+    name:
+      - tree

@@ -1,0 +1,6 @@
+---
+# Application-specific variables
+# These are difficult to override, provide some fixed application constants
+commonRole_variable_001: some value
+commonRole_variable_002: -555
+https_port: 443

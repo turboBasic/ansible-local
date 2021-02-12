@@ -1,0 +1,5 @@
+---
+# Default values provided by role 'common'
+# These are easily overriden and provided so that avoid undefined variables:
+commonRole_parameter_001: some text
+commonRole_parameter_002: 666
