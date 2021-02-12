@@ -4,7 +4,8 @@
   become: yes
 
   vars_files:
-    - passwd.yml
+    - vars/servers.yml
+    - vars/configs.yml
 
   vars:
     install_lastpass_gui: false
@@ -16,6 +17,10 @@
   roles:
     - role: env
       tags: [env, profile, all]
+
+    - role: common
+      vars:
+        commonRole_parameter_001: text from playbook
 
     - role: node
       nvm_user: "{{ me }}"
@@ -29,6 +34,13 @@
     - role: devpc
       tags: [devpc, all]
 
+    - role: ntg7
+      vars:
+        cc: clang
+        shell: zsh
 
-
+    - role: git_cache_host
+      vars:
+        cc: gcc
+        shell: bash
 ...
