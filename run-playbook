@@ -1,41 +1,52 @@
 #!/usr/bin/env bash
 
-_oldOptions="$(set +o); set -${-//i/}"
-set -o errexit
-set -o nounset
-set -o pipefail
+#
+#   This script can be either sourced or executed by bash.
+#   Sourcing of this script does not change current environments
+#
 
-trap 'onExit $? $LINENO' EXIT
-
-onExit() {
-    # Restore options
-    $_oldOptions || true
-    unset _oldOptions || true
-}
-
-getScriptDir() {
-    dirname "$( realpath "${BASH_SOURCE[0]}" )"
-}
-
-isTruth() {
-    local value
-    value=$(echo $1)
-
-    [[ -z "$value"
-       || "$value" == "0"
-       || "$value" == "false"
-       || "$value" == "no"
-       || "$value" =~ ^[[:blank:]]+$
-    ]]  && return 666
-    return 0
-}
+if [ -z "$BASH_VERSION" ]; then
+    echo "Error: should be executed by bash" >&2
+    return 2 || exit 2
+fi
 
 
-isTruth "${DRY_RUN:-false}" && cmd="echo" || cmd=''
-(
+main() {
+    local -
+    local prefix='' fd='1'
+    if isTruth "${DRY_RUN:-false}"; then
+        prefix='echo'
+        fd='2'
+    fi
+
+    declare -r SCRIPT_DIR=$(dirname "$( realpath "${BASH_SOURCE[0]}" )")
+
     set -o xtrace
-    $cmd cd "$(getScriptDir)/src"
-    $cmd export ANSIBLE_CONFIG="$(getScriptDir)/src/ansible.cfg"
-    $cmd ansible-playbook "${@}"
-    set +o xtrace
+    $prefix 1>&$fd      `# In case of dry run print command to stderr` \
+        env --chdir="$SCRIPT_DIR/src" \
+            ANSIBLE_CONFIG="$SCRIPT_DIR/src/ansible.cfg" \
+            ansible-playbook "${@}"
+}
+
+
+isTruth() (
+    shopt -s nocasematch
+
+    if [[ "${1:-false}" =~ ^[[:space:]]*(false|no|0|)[[:space:]]*$ ]]; then
+        return 66
+    fi
+    return 0
 )
+
+
+## Script body
+
+_exitCmd='exit'
+if [[ "${BASH_SOURCE[0]}" != "$0" ]]; then
+    _exitCmd='return'
+fi
+
+main "$@"
+eval 'unset -f main isTruth;' \
+     'unset _exitCmd;' \
+     "$_exitCmd $?"
