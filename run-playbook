@@ -1,8 +1,14 @@
 #!/usr/bin/env bash
 
 #
-#   This script can be either sourced or executed by bash.
-#   Sourcing of this script does not change current environments
+#   Helper script for execution of Ansible playbooks with typical options.
+#   This simple wrapper provides the following amenities to `ansible-playbook` utility:
+#     - sets `src/` as current working directory
+#     - sets default configuration file `src/ansible.cfg`
+#     - allows to drop default file extension (`.y{,a}ml`) for playbook files
+#
+#   This script can be invoked either by sourcing with Bash or by executing in a subshell.
+#   Script does not change current environment, regardless of its invocation method.
 #
 
 if [ -z "$BASH_VERSION" ]; then
@@ -13,21 +19,37 @@ fi
 
 main() {
     local -
-    local prefix='' fd='1'
+    declare -r SCRIPT_DIR=$(dirname "$( realpath "${BASH_SOURCE[0]}" )")
+
+    declare prefix fd='1'
     if isTruth "${DRY_RUN:-false}"; then
         prefix='echo'
         fd='2'
     fi
 
-    declare -r SCRIPT_DIR=$(dirname "$( realpath "${BASH_SOURCE[0]}" )")
+    declare -a allPlaybooks=() matchedPlaybooks
+    declare i
+    for i; do
+        matchedPlaybooks=( $(findPlaybooks "$SCRIPT_DIR/src" "$i") )
+        if ((${#matchedPlaybooks[@]} == 0)); then
+            echo 1>&2 "Error: No playbooks with names in (" $i{,.yml,.yaml} ") were found"
+            return 3
+        elif ((${#matchedPlaybooks[@]} > 1)); then
+            echo 1>&2 "Warning: Multiple playbooks with the same name were found: ${matchedPlaybooks[@]}"
+        fi
+        allPlaybooks+=( ${matchedPlaybooks[@]} )
+    done
 
     set -o xtrace
     $prefix 1>&$fd      `# In case of dry run print command to stderr` \
         env --chdir="$SCRIPT_DIR/src" \
             ANSIBLE_CONFIG="$SCRIPT_DIR/src/ansible.cfg" \
-            ansible-playbook "${@}"
+            ansible-playbook "${allPlaybooks[@]}"
 }
 
+findPlaybooks() {
+    bash -O extglob -O nullglob -c " printf '%s\n' \"$1/$2\"?(.y?(a)ml) "
+}
 
 isTruth() (
     shopt -s nocasematch
@@ -47,6 +69,6 @@ if [[ "${BASH_SOURCE[0]}" != "$0" ]]; then
 fi
 
 main "$@"
-eval 'unset -f main isTruth;' \
+eval 'unset -f main isTruth findPlaybooks;' \
      'unset _exitCmd;' \
      "$_exitCmd $?"
