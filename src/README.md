@@ -2,8 +2,14 @@ Ansible: provision local PC
 ===========================
 
 
-Usage
------
+Unlock repo
+-----------
+
+See [README.md](../README.md) in repository root
+
+
+Apply roles
+-----------
 
 1. `ansible-playbook site.yml -vv`
 2. `ansible-playbook site.yml --tags env`
