@@ -6,28 +6,33 @@ Using encrypted passwords in Ansible playbooks
 Initialize Ansible Vault
 ------------------------
 
-Create password file for Ansible Vault and make sure it is excluded by Git
+### Option 1. Create local password file for Ansible Vault and make sure it is excluded by Git
 
 ```bash
-if git status --porcelain | grep --quiet ^M; then
-    echo 'Error: index is not clean'
-else
-    vaultFile='vault_password'
+vaultFile='secrets/vault_password'
 
-    echo "$vaultFile" >> .gitignore \
-    &&  echo 'mySuperPassword' > "$vaultFile" \
-    &&  chmod 600 "$vaultFile"
+echo "$(basename $vaultFile)" >> .gitignore
+echo 'mySuperPassword' > "$vaultFile"
+chmod 600 "$vaultFile"
 
-    cat <<-EOF > "$vaultFile".sample
-		This is example of Ansible Vault password file.
-		Replace content of this file with your password and
-		remove ‘.sample’ suffix from file name.
-	EOF
+git add --  .gitignore
+git commit --message ':wrench: Ignore Ansible vault password file'
+```
 
-    git add --  .gitignore \
-                "$vaultFile".sample
-    git commit --message ':wrench: Ignore Ansible vault password file'
-fi
+
+### Option 2. Encrypt password file for Ansible Vault with `git-crypt` and check into Git
+
+Initialize repo with git-crypt and add your encryption key(s) with git-crypt.
+
+```bash
+vaultFile='secrets/vault_password.key'
+
+echo 'mySuperPassword' > "$vaultFile"
+echo '*.key  filter=git-crypt diff=git-crypt' >> .gitattributes
+
+git add -- .gitattributes \
+           "$vaultFile"
+git commit --message ':lock: Add encrypted Ansible vault password file'
 ```
 
 
