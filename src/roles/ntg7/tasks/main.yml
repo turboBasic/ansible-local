@@ -12,6 +12,7 @@
       - gpg
       - jq
       - lastpass-cli
+      - net-tools
       - stow
       - xclip
       - xmlstarlet
