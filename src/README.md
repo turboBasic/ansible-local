@@ -27,3 +27,9 @@ Using `run-playbook` helper, assuming repository root as current working directo
 
 1.     ./run-playbook playbook-local-machine \
                       playbook-site
+
+
+Ansible Playbook organization
+-----------------------------
+
+See [README](https://github.com/turboBasic/dotfiles/blob/develop/ansible/.ansible/README.md) in **dotfiles** repo
