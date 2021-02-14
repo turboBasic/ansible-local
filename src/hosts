@@ -1,0 +1,16 @@
+##
+##  Playbook-scope Ansible inventory
+##  ================================
+##
+
+localhost
+
+[work]
+localhost.localdomain
+aamelnyk-tmp-lws
+
+[home]
+dell-5591
+
+[self]
+localhost
