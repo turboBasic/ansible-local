@@ -1,24 +1,28 @@
 {
-  "files.associations": {
-      "*.key": "plaintext",
-      "environment": "ini",
-      "login": "properties",
-      "su": "properties",
-      "*.pam_environment": "properties",
-      "profile": "shellscript",
-      "sudoers": "properties",
-  },
-  "workbench.colorCustomizations": {
-    "activityBar.background": "#18134e",
-    "titleBar.activeBackground": "#18134e",
-    "titleBar.activeForeground": "#FAFAFB"
-  },
-  "files.exclude": {
-    "**/.git": false,
-    "**/.svn": true,
-    "**/.hg": true,
-    "**/CVS": true,
-    "**/.DS_Store": true
-  },
-  "explorerExclude.backup": null,
+    //  #region ExplorerExclude
+        "explorerExclude.backup": {
+            // Placeholder
+        },
+        "files.exclude": {
+            "**/.git": false,
+            "**/.svn": true,
+            "**/.hg": true,
+            "**/CVS": true,
+            "**/.DS_Store": true
+        },
+    //  #endregion
+    "files.associations": {
+        "environment": "ini",
+        "*.key": "plaintext",
+        "login": "properties",
+        "*.pam_environment": "properties",
+        "su": "properties",
+        "sudoers": "properties",
+        "profile": "shellscript",
+    },
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#18134e",
+        "titleBar.activeBackground": "#18134e",
+        "titleBar.activeForeground": "#FAFAFB"
+    },
 }
