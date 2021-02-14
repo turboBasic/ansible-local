@@ -28,4 +28,6 @@
       vars:
         cc: gcc
         shell: bash
+
+    - role: dotfiles-keeper
 ...
