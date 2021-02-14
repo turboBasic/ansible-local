@@ -1,4 +1,4 @@
 ---
 carbon: /opt/carbon-ui
 git_cache_dir: /opt/git-cache
-should_install_carbon: true
+...

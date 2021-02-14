@@ -1,2 +1,3 @@
 ---
-should_install_carbon: false
+should_install_carbon: no
+...

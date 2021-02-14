@@ -1,2 +1,4 @@
 ---
 ccache_dir: /opt/ccache
+should_install_carbon: yes
+...
