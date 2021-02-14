@@ -3,14 +3,22 @@
 ##  ================================
 ##
 
-localhost
 
-[work]
-localhost.localdomain
-aamelnyk-tmp-lws
+### Hosts  ###
 
-[home]
-dell-5591
+
+### Groups ###
 
 [self]
-localhost
+localhost.localdomain
+
+[work]
+aamelnyk-tmp-lws.luxoft.com
+aamelnyk-tmp-lws
+
+[ntg6]
+ntg6ci.luxoft.com
+ntg6ci2.luxoft.com
+ntg6ci3.luxoft.com
+dai-uisw-0.luxoft.com
+dai-uisw-1.luxoft.com
